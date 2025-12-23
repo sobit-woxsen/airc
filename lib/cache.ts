@@ -15,7 +15,11 @@ class MemoryCache {
   constructor() {
     this.cache = new Map()
     this.cleanupInterval = null
-    this.startCleanup()
+
+    // Only start cleanup if not in the Next.js build phase
+    if (process.env.NEXT_PHASE !== 'phase-production-build') {
+      this.startCleanup()
+    }
   }
 
   /**
