@@ -11,7 +11,7 @@ export async function GET(request: Request) {
         const description = searchParams.get('description') || 'Pioneering Machine Intelligence & Quantum Research'
 
         // Fetch the logo image
-        const logoUrl = new URL('/airc-logo-3d-latest.PNG', request.url).toString()
+        const logoUrl = new URL('/airc-logo-3d-latest.png', request.url).toString()
         const logoData = await fetch(logoUrl).then((res) => res.arrayBuffer())
         const logoBase64 = `data:image/png;base64,${Buffer.from(logoData).toString('base64')}`
 

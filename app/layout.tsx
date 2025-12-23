@@ -98,12 +98,12 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/airc-logo-3d-latest.PNG",
+        url: "/airc-logo-3d-latest.png",
         sizes: "any",
       },
     ],
-    apple: "/airc-logo-3d-latest.PNG",
-    shortcut: "/airc-logo-3d-latest.PNG",
+    apple: "/airc-logo-3d-latest.png",
+    shortcut: "/airc-logo-3d-latest.png",
   },
 }
 

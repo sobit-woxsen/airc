@@ -14,7 +14,7 @@ export function LayoutWrapper({ children }: { children: ReactNode }) {
       className={
         isDashboard
           ? "relative min-h-screen bg-white"
-          : "max-w-[80vw] mx-auto border-xl border-black/5 relative min-h-screen bg-white shadow-sm"
+          : "w-full md:max-w-[80vw] mx-auto border-xl border-black/5 relative min-h-screen bg-white shadow-sm"
       }
     >
       {children}

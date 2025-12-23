@@ -73,7 +73,7 @@ export function Header() {
             <span className="sr-only">AI Research Center</span>
             <div className={`relative transition-all duration-500 ${isScrolled ? "h-8 w-8" : "h-10 w-10"}`}>
               <img
-                src="/airc-logo-3d-latest.PNG"
+                src="/airc-logo-3d-latest.png"
                 alt="AIRC Logo"
                 className="object-contain w-full h-full"
               />
