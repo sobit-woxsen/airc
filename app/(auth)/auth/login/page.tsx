@@ -132,7 +132,7 @@ export default function LoginPage() {
             <span className="font-bold text-gray-900 text-xl">AIRC</span>
           </div>
 
-          {/* <Button
+          <Button
             variant="ghost"
             size="sm"
             onClick={() => router.push("/")}
@@ -140,7 +140,7 @@ export default function LoginPage() {
           >
             <Home className="h-4 w-4 transition-transform group-hover:-translate-y-0.5" />
             <span className="font-medium text-sm">Back to Home</span>
-          </Button> */}
+          </Button>
         </header>
 
         <main className="flex-1 flex items-center justify-center p-8 mt-12 lg:mt-0">
