@@ -72,7 +72,7 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 relative">
                 <img
-                  src="/airc-logo-3d-latest.PNG"
+                  src="/airc-logo-3d-latest.png"
                   alt="AIRC Logo"
                   className="object-contain w-full h-full filter brightness-110"
                 />

@@ -345,7 +345,7 @@ export function Header() {
               <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
                 <div className="h-8 w-8 relative">
                   <img
-                    src="/airc-logo-3d-latest.PNG"
+                    src="/airc-logo-3d-latest.png"
                     alt="AIRC Logo"
                     className="object-contain w-full h-full"
                   />
