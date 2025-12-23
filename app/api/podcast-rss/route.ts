@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 export async function GET() {
   const baseUrl = "https://your-university-lab.com" // Update with your actual domain
 

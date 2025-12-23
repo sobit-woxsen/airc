@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { getPublicProducts, getPublicDepartments } from "@/app/actions/public-data"
 
+export const dynamic = "force-dynamic"
+
 export async function GET() {
     try {
         const [projects, departments] = await Promise.all([
