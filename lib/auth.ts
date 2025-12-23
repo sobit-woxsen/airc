@@ -157,11 +157,12 @@ export const auth = betterAuth({
     updateAge: 24 * 60 * 60, // Update every 24 hours
   },
   secret: process.env.BETTER_AUTH_SECRET || "static_secret_for_build_only_change_in_production",
-  baseURL: process.env.NEXTAUTH_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000",
+  baseURL: process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
   trustedOrigins: [
-    process.env.NEXTAUTH_URL || "http://localhost:3000",
+    process.env.NEXT_PUBLIC_APP_URL,
     process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "",
-  ].filter(Boolean),
+    "http://localhost:3000",
+  ].filter(Boolean) as string[],
   user: {
     additionalFields: {
       departmentId: {
