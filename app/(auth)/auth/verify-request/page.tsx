@@ -1,15 +1,14 @@
-"use client"
 
-import { useSearchParams } from "next/navigation"
+export const dynamic = "force-dynamic"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { MailCheck, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-export default function VerifyRequestPage() {
-  const searchParams = useSearchParams()
-  const email = searchParams.get("email")
+export default function VerifyRequestPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  const email = typeof searchParams?.email === "string" ? searchParams.email : undefined
 
   return (
     <Card className="w-full shadow-xl border-0">

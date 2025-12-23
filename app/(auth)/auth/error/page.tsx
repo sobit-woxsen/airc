@@ -1,6 +1,7 @@
-"use client"
 
-import { useSearchParams } from "next/navigation"
+
+export const dynamic = "force-dynamic"
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle, ArrowLeft } from "lucide-react"
@@ -23,13 +24,9 @@ const errorMessages: Record<string, string> = {
   Default: "An error occurred during authentication.",
 }
 
-export default function AuthErrorPage() {
-  const searchParams = useSearchParams()
-  const error = searchParams.get("error")
-
-  const errorMessage = error && errorMessages[error]
-    ? errorMessages[error]
-    : errorMessages.Default
+export default function AuthErrorPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  const error = typeof searchParams?.error === "string" ? searchParams.error : undefined
+  const errorMessage = error && errorMessages[error] ? errorMessages[error] : errorMessages.Default
 
   return (
     <Card className="w-full shadow-xl border-0">
