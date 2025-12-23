@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Loader2 } from "lucide-react"
+import { Skeleton } from "@/components/ui/skeleton"
 import { type Product, type Department } from "@/lib/products-data"
 
 // Removed unused DepartmentIcon
@@ -108,6 +108,38 @@ function ProductCard({
           </div>
         </div>
       </Link>
+    </motion.div>
+  )
+}
+
+function ProductCardSkeleton({ index }: { index: number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
+      className="h-full"
+    >
+      <div className="flex flex-col h-full bg-white rounded-2xl border border-black/5 overflow-hidden">
+        <div className="absolute inset-0 bg-noise opacity-[0.02] pointer-events-none" />
+
+        {/* Image Skeleton */}
+        <Skeleton className="h-56 w-full rounded-none" />
+
+        {/* Content Skeleton */}
+        <div className="p-8 flex flex-col">
+          {/* Title */}
+          <Skeleton className="h-7 w-3/4 mb-2" />
+          {/* Tagline */}
+          <Skeleton className="h-4 w-1/2 mb-6" />
+
+          {/* Action area */}
+          <div className="flex items-center justify-between pt-6 mt-6 border-t border-black/5">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-8 w-8 rounded-full" />
+          </div>
+        </div>
+      </div>
     </motion.div>
   )
 }
@@ -254,9 +286,23 @@ export default function ProductsPage() {
       <section className="py-12 min-h-[400px]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-20">
-              <Loader2 className="h-10 w-10 text-primary animate-spin mb-4" />
-              <p className="text-muted-foreground animate-pulse">Loading products...</p>
+            <div>
+              {/* Skeleton for product count */}
+              <div className="mb-12 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="flex flex-col -space-y-1">
+                    <Skeleton className="h-3 w-16 mb-1" />
+                    <Skeleton className="h-4 w-48" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Skeleton Grid */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <ProductCardSkeleton key={index} index={index} />
+                ))}
+              </div>
             </div>
           ) : (
             <AnimatePresence mode="wait">

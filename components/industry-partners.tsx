@@ -45,7 +45,7 @@ export function IndustryPartners() {
     const isInView = useInView(ref, { once: true, margin: "-100px" })
 
     return (
-        <section ref={ref} className="py-24 border-y border-black/5 relative overflow-hidden bg-white">
+        <section ref={ref} className="py-24 border-y border-dashed border-black/5 relative overflow-hidden bg-white">
             {/* Background Decorative Elements */}
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                 <div className="absolute inset-0 bg-noise opacity-[0.02]" />
@@ -119,7 +119,7 @@ export function IndustryPartners() {
                     </motion.div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 overflow-hidden rounded-[2.5rem] border border-black/5 bg-white/40 backdrop-blur-md shadow-2xl shadow-black/[0.02] divide-x divide-y divide-black/5">
+                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 overflow-hidden rounded-lg border border-dashed border-black/5 bg-white/40 backdrop-blur-md shadow-2xl shadow-black/[0.02] divide-x divide-y divide-dashed divide-black/5">
                     {featuredPartners.map((partner, index) => (
                         <motion.div
                             key={index}

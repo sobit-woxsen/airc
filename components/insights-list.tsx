@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { Calendar, Clock, ArrowRight } from "lucide-react"
+import { Calendar, Clock, ArrowRight, ChevronRight } from "lucide-react"
 import { BlurImage } from "@/components/blur-image"
 import { Article } from "@/lib/mdx"
 import { SpotlightCard } from "@/components/ui/spotlight-card"
@@ -100,7 +100,7 @@ export function InsightsList({
                       </span>
                     </div>
 
-                    <h3 className="text-2xl md:text-3xl font-medium tracking-tighter text-left text-balance mb-4">
+                    <h3 className="text-2xl md:text-3xl font-medium tracking-tighter text-left text-balance mb-4 line-clamp-2">
                       <Link href={`/insights/${insight.slug}`} className="hover:text-black/70 transition-colors">
                         {insight.title}
                       </Link>
@@ -136,10 +136,10 @@ export function InsightsList({
                         />
                         <Link href={`/insights/${insight.slug}`}>
                           <button
-                            className="group relative cursor-pointer inline-flex h-10 items-center justify-center overflow-hidden rounded-full border border-black/5 bg-black text-white px-6 text-[10px] font-semibold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-lg shadow-black/10"
+                            className="group relative cursor-pointer inline-flex h-10 items-center justify-center overflow-hidden rounded-full border border-black/5 bg-black text-white px-6 text-sm transition-all hover:scale-105 active:scale-95 shadow-lg shadow-black/10"
                           >
                             <span className="relative z-10 flex items-center gap-2">
-                              Explore <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
+                              Read <ChevronRight className="w-3 h-3 transition-transform group-hover:translate-x-1" />
                             </span>
                           </button>
                         </Link>

@@ -116,9 +116,9 @@ export function FeaturedProjects() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
             >
-              <div className="group relative flex flex-col h-full overflow-hidden rounded-[2.5rem] border border-black/5 bg-white/40 p-2 backdrop-blur-md transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-black/[0.04]">
+              <div className="group relative flex flex-col h-full overflow-hidden rounded-lg border border-black/5 bg-white/40 p-2 backdrop-blur-md transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-black/[0.04]">
                 {/* Image Side with Premium Frame */}
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-neutral-100">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-neutral-100">
                   <BlurImage
                     src={project.image}
                     alt={project.title}
@@ -128,16 +128,16 @@ export function FeaturedProjects() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
 
                   {/* Status Badge */}
-                  <div className="absolute top-4 right-4 z-20">
+                  {/* <div className="absolute top-4 right-4 z-20">
                     <div className="bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full shadow-sm border border-white/20">
                       <span className="text-[10px] font-bold uppercase tracking-widest text-black/60">{project.status}</span>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="flex flex-col flex-grow p-6">
                   <div className="mb-4">
-                    <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
+                    <span className="text-[10px] font-bold uppercase  text-accent">
                       {project.category}
                     </span>
                   </div>
@@ -153,7 +153,7 @@ export function FeaturedProjects() {
                   <div className="mt-auto pt-8 flex items-center justify-between">
                     <Link
                       href={project.link}
-                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black hover:text-accent transition-colors group/link"
+                      className="inline-flex items-center gap-2 text-xs font-bold uppercase  text-black hover:text-accent transition-colors group/link"
                     >
                       Read Case Study
                       <ArrowRight className="h-3 w-3 transition-transform group-hover/link:translate-x-1" />

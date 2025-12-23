@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowLeft, ExternalLink, Github, FileText, Play, Maximize2, X, ArrowRight, Download } from "lucide-react"
+import { ArrowLeft, ExternalLink, Github, FileText, Play, Maximize2, X, ArrowRight, Download, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import Link from "next/link"
@@ -52,10 +52,10 @@ export default function ProductDetailPageClient({ product, department, suggested
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Back Button */}
-          <Link href={backLink} className="inline-block mb-12">
+          <Link href={backLink} className="inline-block my-12">
             <div className="group flex items-center gap-2 text-[10px] font-semibold uppercase text-black/40 hover:text-black transition-colors">
-              <ArrowLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
-              Back to Laboratory
+              <ChevronLeft className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-1" />
+              Back to Products
             </div>
           </Link>
 
@@ -81,17 +81,17 @@ export default function ProductDetailPageClient({ product, department, suggested
                           exit={{ opacity: 0 }}
                           className="w-full h-full"
                         >
-                          {allMedia[currentSlide].type === "video" ? (
+                          {allMedia[currentSlide]?.type === "video" ? (
                             <div className="w-full h-full bg-black relative">
                               <video
-                                src={allMedia[currentSlide].url}
+                                src={allMedia[currentSlide]?.url}
                                 controls
                                 className="w-full h-full object-contain"
                               />
                             </div>
                           ) : (
                             <BlurImage
-                              src={allMedia[currentSlide].url || "/placeholder.svg"}
+                              src={allMedia[currentSlide]?.url || "/placeholder.svg"}
                               alt={`Media ${currentSlide + 1}`}
                               fill
                               className="object-cover"
@@ -140,13 +140,13 @@ export default function ProductDetailPageClient({ product, department, suggested
                               : "border-transparent opacity-60 hover:opacity-100 hover:border-black/10"
                               }`}
                           >
-                            {media.type === "video" ? (
+                            {media?.type === "video" ? (
                               <div className="w-full h-full bg-neutral-200 flex items-center justify-center">
                                 <Play className="h-4 w-4 text-black/40" />
                               </div>
                             ) : (
                               <BlurImage
-                                src={media.url || "/placeholder.svg"}
+                                src={media?.url || "/placeholder.svg"}
                                 alt={`Thumbnail ${i + 1}`}
                                 fill
                                 className="object-cover"
@@ -345,10 +345,8 @@ export default function ProductDetailPageClient({ product, department, suggested
           />
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-              <div className="flex items-center justify-center gap-3 mb-6">
-                <span className="text-[10px] font-semibold uppercase text-accent">Lab Partnership</span>
-              </div>
-              <h2 className="text-4xl md:text-6xl font-medium tracking-tighter mb-8 italic">
+
+              <h2 className="text-4xl md:text-6xl font-medium tracking-tighter mb-8 ">
                 Ready to <span className="text-accent underline underline-offset-8 decoration-1">Innovate</span>?
               </h2>
               <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium">
@@ -398,10 +396,10 @@ export default function ProductDetailPageClient({ product, department, suggested
             <div className="flex-1 w-full h-full flex items-center justify-center overflow-hidden p-8">
               <div className="relative w-full h-full flex items-center justify-center">
                 <div className="relative w-full h-full">
-                  {allMedia[currentSlide].type === "video" ? (
-                    <video src={allMedia[currentSlide].url} controls autoPlay className="max-w-full max-h-full mx-auto" />
+                  {allMedia[currentSlide]?.type === "video" ? (
+                    <video src={allMedia[currentSlide]?.url} controls autoPlay className="max-w-full max-h-full mx-auto" />
                   ) : (
-                    <BlurImage src={allMedia[currentSlide].url || "/placeholder.svg"} alt={`Image ${currentSlide + 1}`} fill className="object-contain" />
+                    <BlurImage src={allMedia[currentSlide]?.url || "/placeholder.svg"} alt={`Image ${currentSlide + 1}`} fill className="object-contain" />
                   )}
                   {allMedia.length > 1 && (
                     <>

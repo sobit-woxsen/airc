@@ -121,7 +121,7 @@ export function Sidebar({ userRoles, activeRole, userName, departmentName, user 
             </div>
             {!isCollapsed && (
               <div className="flex-1 min-w-0">
-                <h2 className="text-lg font-semibold tracking-tight">Portal</h2>
+                <h2 className="text-lg font-semibold tracking-tight">AIRC Portal</h2>
                 {activeRole === "ENGINEER" && departmentName ? (
                   <p className="text-xs text-muted-foreground font-medium truncate">
                     {departmentName}
@@ -254,7 +254,7 @@ export function Sidebar({ userRoles, activeRole, userName, departmentName, user 
             </div>
             <Button
               variant="outline"
-              className="w-full justify-start rounded-full font-semibold hover:bg-gray-100 transition-all hover:scale-[1.02] active:scale-95 shadow-sm"
+              className="w-full justify-start rounded-full font-semibold  transition-all hover:scale-[1.02] active:scale-95 shadow-sm"
               onClick={handleSignOut}
             >
               <LogOut className="mr-2 h-4 w-4" />

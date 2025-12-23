@@ -63,7 +63,7 @@ export function RoleSwitcher({ userRoles, activeRole }: RoleSwitcherProps) {
         <Button
           variant="outline"
           size="sm"
-          className="w-full justify-between gap-2 h-10 px-4 rounded-lg border-slate-200 shadow-none hover:bg-slate-50 transition-all font-medium"
+          className="w-full justify-between gap-2 h-10 px-4 rounded-lg border-slate-200 shadow-none hover:bg-slate-50 hover:text-black transition-all font-medium"
           disabled={isLoading}
         >
           <span className="truncate">{getRoleLabel(activeRole)}</span>

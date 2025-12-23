@@ -99,13 +99,13 @@ export function LatestInsights({ articles = [] }: LatestInsightsProps) {
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
             >
               <Link href={`/insights/${insight.slug}`} className="group block h-full">
-                <div className="relative flex flex-col h-full overflow-hidden rounded-[2.5rem] border border-black/5 bg-white/40 p-8 backdrop-blur-md transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-black/[0.04]">
+                <div className="relative flex flex-col h-full overflow-hidden rounded-lg border border-black/5 bg-white/40 p-8 backdrop-blur-md transition-all duration-500 hover:bg-white hover:shadow-2xl hover:shadow-black/[0.04]">
                   <div className="flex flex-col h-full">
                     <div className="mb-6 flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
+                      <span className="text-[10px] font-bold uppercase  text-accent">
                         {insight.category}
                       </span>
-                      <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-neutral-400">
+                      <div className="flex items-center gap-4 text-[10px] font-medium uppercase  text-neutral-400">
                         <span className="flex items-center gap-1.5">
                           <Clock className="h-3 w-3" />
                           {insight.readTime}
@@ -117,17 +117,17 @@ export function LatestInsights({ articles = [] }: LatestInsightsProps) {
                       {insight.title}
                     </h3>
 
-                    <p className="text-neutral-500 text-sm leading-relaxed line-clamp-3 mb-8 font-medium">
+                    <p className="text-neutral-500 text-sm  line-clamp-3 mb-8 font-medium">
                       {insight.excerpt}
                     </p>
 
                     <div className="mt-auto pt-6 flex items-center justify-between border-t border-black/5">
-                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black group-hover:text-accent transition-all duration-300">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase  text-black group-hover:text-accent transition-all duration-300">
                         Read Article
                         <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                       </div>
 
-                      <div className="flex items-center gap-1.5 text-[10px] font-bold text-neutral-400">
+                      <div className="flex items-center gap-1.5 text-xs font-medium text-neutral-400">
                         <Calendar className="h-3 w-3" />
                         {new Date(insight.date).toLocaleDateString("en-US", {
                           month: "short",

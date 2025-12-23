@@ -93,22 +93,22 @@ export function ServicesPreview() {
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8, delay: 0.2, ease: [0.21, 0.47, 0.32, 0.98] }}
                             >
-                                <div className="relative rounded-[2.2rem] p-1.5 overflow-hidden group/frame">
+                                <div className="relative rounded-lg p-1.5 overflow-hidden group/frame">
                                     {/* Subtle Animated Border for Image */}
-                                    <div className="absolute inset-0 z-0 bg-gradient-to-br from-black/5 to-transparent group-hover/frame:from-accent/20 transition-colors duration-500" />
+                                    {/* <div className="absolute inset-0 z-0 bg-gradient-to-br from-black/5 to-transparent group-hover/frame:from-accent/20 transition-colors duration-500" /> */}
 
-                                    <div className="relative z-10 rounded-[2rem] bg-white p-1.5 shadow-2xl backdrop-blur-2xl">
-                                        <div className="relative aspect-video overflow-hidden rounded-[1.7rem] bg-neutral-100 shadow-inner">
-                                            <Image
-                                                src={service.image}
-                                                alt={service.title}
-                                                fill
-                                                className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                                                sizes="(max-width: 768px) 100vw, 50vw"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-60" />
-                                        </div>
+                                    {/* <div className="relative z-10 rounded-lg bg-white p-1.5 shadow-2xl backdrop-blur-2xl"> */}
+                                    <div className="relative aspect-video overflow-hidden border border-accent/20 rounded-lg bg-neutral-100 shadow-inner">
+                                        <Image
+                                            src={service.image}
+                                            alt={service.title}
+                                            fill
+                                            className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-60" />
                                     </div>
+                                    {/* </div> */}
                                 </div>
 
                                 {/* Decorative Floating Orb */}

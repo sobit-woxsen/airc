@@ -218,8 +218,8 @@ const teamMembers: TeamMember[] = [
   },
   // Engineers
   {
-    name: "Madhav",
-    role: "Engineer",
+    name: "Janumula Madhav",
+    role: "Junior Robotics Engineer",
     department: "Engineering",
     bio: "Building production ML systems.",
     image: "/teams/engineers/Madhav.jpg",
@@ -228,7 +228,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Pankaj Kumar Singh",
-    role: "Engineer",
+    role: "Senior AI Engineer",
     department: "Engineering",
     bio: "Full-stack developer and ML engineer.",
     image: "/teams/engineers/Pankaj Kumar Singh.jpg",
@@ -237,7 +237,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Samir Anil Jumade",
-    role: "Engineer",
+    role: "Senior Blockchain Engineer",
     department: "Engineering",
     bio: "Specializing in scalable infrastructure.",
     image: "/teams/engineers/Samir Anil Jumade.jpg",
@@ -246,7 +246,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Sobit Prasad",
-    role: "Engineer",
+    role: "Full Stack Developer",
     department: "Engineering",
     bio: "Building AI-powered applications.",
     image: "/teams/engineers/Sobit Prasad.jpg",
@@ -255,7 +255,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Vishal Sharma",
-    role: "Engineer",
+    role: "Senior Project Engineer",
     department: "Engineering",
     bio: "Expert in backend systems.",
     image: "/teams/engineers/Vishal Sharma.jpg",
@@ -264,7 +264,7 @@ const teamMembers: TeamMember[] = [
   },
   {
     name: "Yash",
-    role: "Engineer",
+    role: "Metaverse Engineer",
     department: "Engineering",
     bio: "Frontend developer and UI specialist.",
     image: "/teams/engineers/yash.jpg",
@@ -477,12 +477,12 @@ export default function TeamsPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
           >
-            <div className="flex items-center justify-center gap-3 mb-6">
+            {/* <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-12 h-px bg-accent/50" />
               <span className="text-xs font-black uppercase tracking-[0.3em] text-accent">Career Sanctuary</span>
               <div className="w-12 h-px bg-accent/50" />
-            </div>
-            <h2 className="text-4xl md:text-6xl font-medium tracking-tighter mb-8 italic">
+            </div> */}
+            <h2 className="text-4xl md:text-6xl font-medium tracking-tighter mb-8 ">
               Join Our <span className="text-accent underline underline-offset-8 decoration-1">Future</span>
             </h2>
             <p className="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
@@ -491,13 +491,13 @@ export default function TeamsPage() {
             <div className="flex flex-wrap gap-6 justify-center">
               <Link
                 href="/careers"
-                className="group relative px-10 py-4 bg-white text-black text-[11px] font-black uppercase tracking-widest rounded-full transition-all hover:scale-105 hover:bg-accent hover:text-white"
+                className="group relative px-10 py-4 bg-white  text-sm font-medium text-black  rounded-full transition-all hover:scale-105 hover:bg-accent hover:text-white"
               >
                 View Open Positions
               </Link>
               <Link
                 href="/contact"
-                className="group px-10 py-4 border border-white/20 text-white text-[11px] font-black uppercase tracking-widest rounded-full transition-all hover:bg-white hover:text-black"
+                className="group px-10 py-4 border border-white/20 text-white text-sm   rounded-full transition-all hover:bg-white hover:text-black"
               >
                 Contact Us
               </Link>
@@ -515,10 +515,7 @@ export default function TeamsPage() {
 
         <div className="max-w-4xl mx-auto relative z-10">
           <div className="mb-20">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-[2px] bg-accent" />
-              <span className="text-xs font-black uppercase tracking-[0.3em] text-accent">Knowledge Base</span>
-            </div>
+
             <h2 className="text-4xl md:text-5xl font-medium tracking-tighter text-black mb-6">
               Frequently Asked Questions
             </h2>
@@ -578,12 +575,12 @@ export default function TeamsPage() {
               <p className="text-white/60 mb-8 max-w-sm">
                 Our operations team is ready to assist you with any inquiries regarding the research center.
               </p>
-              <a
+              <Link
                 href="/contact"
-                className="inline-flex items-center justify-center px-10 py-4 bg-accent text-white rounded-full text-xs font-black uppercase tracking-widest hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_rgba(var(--color-accent-rgb),0.3)]"
+                className="inline-flex items-center justify-center px-10 py-4 bg-accent text-white rounded-full text-sm   hover:scale-105 transition-all duration-300 shadow-[0_8px_32px_rgba(var(--color-accent-rgb),0.3)]"
               >
                 Get in Touch
-              </a>
+              </Link>
             </div>
           </div>
         </div>

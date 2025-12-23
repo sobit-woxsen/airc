@@ -85,7 +85,7 @@ export function ServicesClient() {
 
       <PageShell mainClassName="px-2 md:px-16 relative z-10 bg-transparent">
         <PageHeader
-          title="Operational Vectors"
+          title="Our Services"
           description="From hardware-integrated product engineering to strategic research architecture, we facilitate technical synchronization across the enterprise spectrum."
           breadcrumbs={[
             { label: "Organization", href: "/" },
@@ -139,7 +139,7 @@ export function ServicesClient() {
                   className="w-full lg:w-1/2 space-y-10"
                 >
                   <div className="space-y-6">
-                    <span className="text-[10px] font-bold text-accent uppercase tracking-[0.3em]">Operational Phase</span>
+                    <span className="text-[10px] font-bold text-accent uppercase ">Operational Phase</span>
                     <h3 className="text-4xl font-semibold tracking-tighter text-black leading-none">
                       {service.title}
                     </h3>
@@ -162,7 +162,7 @@ export function ServicesClient() {
 
                   {/* Case Studies - Spotlight Implementation */}
                   <div className="space-y-4">
-                    <span className="text-[10px] font-bold text-black uppercase tracking-[0.2em]">Validated Deployment Logs</span>
+                    <span className="text-[10px] font-bold text-black uppercase">Validated Deployment Logs</span>
                     <div className="grid gap-3">
                       {service.caseStudies.map((study, i) => (
                         <SpotlightCard
@@ -190,11 +190,11 @@ export function ServicesClient() {
                   <div className="pt-6">
                     <Link href={service.link}>
                       <Button
-                        className="h-14 rounded-lg bg-black text-white px-10 text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-black/10 group"
+                        className="h-14 rounded-full bg-black text-white px-10 text-sm transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-black/10 group"
                       >
                         <span className="flex items-center gap-3">
-                          Synchronize Pipeline
-                          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                          See Products
+                          <ChevronRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                         </span>
                       </Button>
                     </Link>
@@ -217,21 +217,21 @@ export function ServicesClient() {
               <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 blur-[120px] rounded-full pointer-events-none translate-x-1/2 -translate-y-1/2" />
 
               <div className="relative z-10 max-w-3xl mx-auto space-y-8">
-                <span className="text-[10px] font-bold text-accent uppercase tracking-[0.4em]">Initialization Relay</span>
+                {/* <span className="text-[10px] font-bold text-accent uppercase tracking-[0.4em]">Initialization Relay</span> */}
                 <h2 className="text-4xl md:text-5xl font-semibold tracking-tighter text-white leading-tight">
                   Integrate with our primary research core.
                 </h2>
-                <p className="text-white/60 text-lg font-semibold leading-relaxed">
+                <p className="text-white/60 text-lg font-medium leading-relaxed">
                   Authorize collaboration sequences to leverage our proprietary machine intelligence infrastructure for your unique organizational constraints.
                 </p>
                 <div className="pt-6">
                   <Link href={'/contact'}>
                     <Button
-                      className="h-16 rounded-lg bg-white text-black px-12 text-[11px] font-bold uppercase tracking-[0.2em] transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-white/5 group"
+                      className="h-16 rounded-full bg-white text-black px-12 text-sm hover:bg-white hove:text-black cursor-pointer  transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-white/5 group"
                     >
                       <span className="flex items-center gap-3">
-                        Authorize Connection
-                        <Zap className="w-4 h-4 fill-black" />
+                        Contact Us
+                        <ChevronRight className="w-4 h-4 " />
                       </span>
                     </Button>
                   </Link>

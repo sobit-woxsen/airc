@@ -105,7 +105,7 @@ export function Footer() {
           {/* Links Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 lg:col-span-8 lg:pl-12">
             <div>
-              <h3 className="text-[10px] font-bold uppercase tracking-[0.25em] text-black/30 mb-8 px-0">Navigation</h3>
+              <h3 className="text-[10px] font-bold uppercase text-black/30 mb-8 px-0">Lab</h3>
               <ul className="space-y-4">
                 {footerLinks.lab.map((item) => (
                   <li key={item.name}>
@@ -120,7 +120,7 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h3 className="text-[10px] font-bold uppercase tracking-[0.25em] text-black/30 mb-8">Pillars</h3>
+              <h3 className="text-[10px] font-bold uppercase  text-black/30 mb-8">Resources</h3>
               <ul className="space-y-4">
                 {footerLinks.resources.map((item) => (
                   <li key={item.name}>
@@ -135,7 +135,7 @@ export function Footer() {
               </ul>
             </div>
             <div className="col-span-2 sm:col-span-1">
-              <h3 className="text-[10px] font-bold uppercase tracking-[0.25em] text-black/30 mb-8">Contact</h3>
+              <h3 className="text-[10px] font-bold uppercase  text-black/30 mb-8">Contact</h3>
               <ul className="space-y-5">
                 {contactInfo.map((item, idx) => (
                   <li key={idx}>
@@ -176,7 +176,7 @@ export function Footer() {
 
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            <span className="text-[11px] font-bold uppercase tracking-widest text-black/40">Status: All Systems Operational</span>
+            <span className="text-[11px] font-bold uppercase  text-black/40">Status: All Systems Operational</span>
           </div>
         </div>
       </div>

@@ -120,3 +120,51 @@ export async function deleteDocument(documentId: string) {
     }
   }
 }
+
+export async function clearProjectMedia(projectId: string) {
+  const user = await getCurrentUser()
+  if (!user) throw new Error("Unauthorized")
+
+  try {
+    await prisma.mediaItem.deleteMany({
+      where: { projectId },
+    })
+
+    revalidatePath(`/engineer/projects/${projectId}`)
+
+    return {
+      success: true,
+      message: "All media cleared successfully",
+    }
+  } catch (error: unknown) {
+    console.error("Error clearing media:", error)
+    return {
+      success: false,
+      message: "Failed to clear media",
+    }
+  }
+}
+
+export async function clearProjectDocuments(projectId: string) {
+  const user = await getCurrentUser()
+  if (!user) throw new Error("Unauthorized")
+
+  try {
+    await prisma.document.deleteMany({
+      where: { projectId },
+    })
+
+    revalidatePath(`/engineer/projects/${projectId}`)
+
+    return {
+      success: true,
+      message: "All documents cleared successfully",
+    }
+  } catch (error: unknown) {
+    console.error("Error clearing documents:", error)
+    return {
+      success: false,
+      message: "Failed to clear documents",
+    }
+  }
+}

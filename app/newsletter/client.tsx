@@ -236,15 +236,15 @@ export function NewsletterClient({ newsletters }: { newsletters: Newsletter[] })
                         transition={{ duration: 0.6 }}
                         className="mb-20"
                     >
-                        <div className="relative p-1 bg-gradient-to-br from-black/5 via-white/50 to-black/5 rounded-[2rem] overflow-hidden shadow-2xl shadow-black/[0.02]">
+                        <div className="relative p-1 bg-gradient-to-br from-black/5 via-white/50 to-black/5 rounded-lg overflow-hidden shadow-2xl shadow-black/[0.02]">
                             <div className="absolute inset-0 bg-noise opacity-[0.02] pointer-events-none" />
-                            <div className="relative bg-white/40 backdrop-blur-3xl rounded-[1.9rem] p-8 lg:p-12 border border-white/40 overflow-hidden flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
-                                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-accent/10 blur-[100px] rounded-full pointer-events-none" />
+                            <div className="relative bg-white/40 backdrop-blur-3xl rounded-lg p-8 lg:p-12 border border-white/40 overflow-hidden flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+                                <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-accent/10 blur-[100px] rounded-lg pointer-events-none" />
 
                                 <div className="flex-1 text-center lg:text-left relative z-10">
-                                    <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-4 block">Connect with our frequency</span>
-                                    <h2 className="text-3xl md:text-4xl font-semibold tracking-tighter mb-4 text-black italic">Laboratory Dispatch</h2>
-                                    <p className="text-black/60 font-semibold leading-relaxed max-w-lg text-balance">
+                                    {/* <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-4 block">Connect with our frequency</span> */}
+                                    <h2 className="text-3xl md:text-4xl font-semibold tracking-tighter mb-4 text-black ">Subscribe</h2>
+                                    <p className="text-black/60 font-medium  max-w-lg text-balance">
                                         Join over 15,000+ researchers receiving monthly synthesis of the most critical breakthroughs in modern machine intelligence.
                                     </p>
                                 </div>
@@ -255,19 +255,19 @@ export function NewsletterClient({ newsletters }: { newsletters: Newsletter[] })
                                             <Mail className="absolute left-5 top-1/2 -translate-y-1/2 h-4 w-4 text-black/30 group-focus-within:text-accent transition-colors duration-300" />
                                             <Input
                                                 type="email"
-                                                placeholder="Enter secure relay address..."
+                                                placeholder="Enter your mail..."
                                                 value={email}
                                                 onChange={(e) => setEmail(e.target.value)}
                                                 required
-                                                className="h-14 rounded-full bg-white/80 border-black/5 pl-12 pr-6 text-sm font-semibold min-w-[320px] transition-all focus:bg-white focus:ring-0 focus:border-black/10"
+                                                className="h-14 rounded-full bg-white/80 border-black/5 pl-12 pr-6 text-sm font-medium min-w-[320px] transition-all focus:bg-white focus:ring-0 focus:border-black/10"
                                             />
                                         </div>
                                         <Button
                                             type="submit"
                                             disabled={isSubmitting || isSubscribed}
-                                            className="h-14 rounded-full bg-black text-white px-10 text-[11px] font-semibold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl shadow-black/10"
+                                            className="h-14 rounded-full bg-black text-white px-10 text-[11px] cursor-pointer font-semibold uppercase tracking-widest transition-all hover:scale-105 active:scale-95 shadow-xl shadow-black/10"
                                         >
-                                            {isSubscribed ? <Check className="h-4 w-4" /> : isSubmitting ? "Syncing..." : "Initialize Relay"}
+                                            {isSubscribed ? <Check className="h-4 w-4" /> : isSubmitting ? "Subscribing..." : "Subscribe"}
                                         </Button>
                                     </form>
                                     {subscribeError && (
@@ -285,13 +285,6 @@ export function NewsletterClient({ newsletters }: { newsletters: Newsletter[] })
                     </motion.div>
 
                     {/* Results Context */}
-                    <div className="flex items-center gap-3 mb-12">
-                        <div className="h-px flex-1 bg-black/5" />
-                        <span className="text-[10px] font-semibold uppercase tracking-widest text-black/20">
-                            {filteredNewsletters.length} Total Logs Identified
-                        </span>
-                        <div className="h-px flex-1 bg-black/5" />
-                    </div>
 
                     {/* Featured Section */}
                     {featuredNewsletters.length > 0 && (
@@ -299,7 +292,7 @@ export function NewsletterClient({ newsletters }: { newsletters: Newsletter[] })
                             <div className="flex items-end justify-between mb-8 px-2">
                                 <div>
                                     <span className="text-[10px] font-semibold uppercase text-accent tracking-widest mb-2 block">High Fidelity</span>
-                                    <h2 className="text-3xl font-semibold tracking-tighter italic">Essential Reading</h2>
+                                    <h2 className="text-3xl font-semibold tracking-tighter ">Essential Reading</h2>
                                 </div>
                             </div>
                             <div className="grid gap-8 md:grid-cols-2">
@@ -434,7 +427,7 @@ function NewsletterCard({
             className="h-full"
         >
             <div
-                className="group relative h-[600px] w-full cursor-pointer flex flex-col overflow-hidden rounded-lg bg-white border border-black/5 hover:border-black/10 transition-all duration-500 shadow-xl shadow-black/[0.02] hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-1"
+                className="group relative h-[500px] w-full cursor-pointer flex flex-col overflow-hidden rounded-lg bg-white border border-black/5 hover:border-black/10 transition-all duration-500 shadow-xl shadow-black/[0.02] hover:shadow-2xl hover:shadow-black/5 hover:-translate-y-1"
                 onClick={() => onOpenPdf(newsletter)}
             >
                 {/* PDF Preview Background */}
@@ -448,7 +441,7 @@ function NewsletterCard({
                 </div>
 
                 {/* Overlays */}
-                <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-90 transition-opacity duration-500 group-hover:opacity-100" />
+                <div className="absolute inset-x-0 bottom-0 h-2/1 bg-gradient-to-t from-black via-black/40 to-transparent z-10 opacity-90 transition-opacity duration-500 group-hover:opacity-100" />
 
                 {/* Highlight line */}
                 <div className="absolute inset-0 border border-white/0 group-hover:border-white/10 transition-all duration-700 pointer-events-none z-30 m-2 rounded-lg" />
@@ -458,7 +451,7 @@ function NewsletterCard({
                     <div className="flex items-center justify-between mb-8 transform transition-transform duration-700 translate-y-4 group-hover:translate-y-0">
                         <div className="flex items-center gap-3">
                             <Calendar className="h-4 w-4 text-accent" />
-                            <span className="text-[11px] font-semibold text-white/60 tracking-widest">{newsletter.date}</span>
+                            <span className="text-xs font-semibold text-white/60 uppercase">{newsletter.date}</span>
                         </div>
                         {featured && (
                             <span className="px-3 py-1 bg-white/20 backdrop-blur-md rounded-lg text-white text-[10px] font-semibold uppercase tracking-[0.2em] border border-white/20">
@@ -468,28 +461,26 @@ function NewsletterCard({
                     </div>
 
                     <div className="space-y-4 transform transition-all duration-700 translate-y-4 group-hover:translate-y-0">
-                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tighter leading-[0.9] italic group-hover:text-accent transition-colors">
+                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tighter leading-[0.9] group-hover:text-accent transition-colors">
                             {newsletter.title}
                         </h3>
-                        <p className="text-white/40 text-sm font-semibold leading-relaxed line-clamp-3 group-hover:text-white/60 transition-colors">
+                        {/* <p className="text-white/40 text-sm font-semibold leading-relaxed line-clamp-3 group-hover:text-white/60 transition-colors">
                             {newsletter.description}
-                        </p>
+                        </p> */}
                     </div>
 
                     <div className="mt-12 flex items-center gap-4 transform transition-all duration-700 translate-y-10 group-hover:translate-y-0 opacity-0 group-hover:opacity-100">
                         <Button
-                            className="flex-1 h-14 bg-white text-black rounded-lg text-[11px] font-semibold uppercase tracking-widest hover:bg-neutral-100 transition-all shadow-2xl shadow-black/10"
+                            className="flex-1 h-12 bg-white text-black rounded-full cursor-pointer text-[11px] font-semibold uppercase tracking-widest hover:bg-neutral-100 transition-all shadow-2xl shadow-black/10"
                             onClick={(e) => {
                                 e.stopPropagation()
                                 onOpenPdf(newsletter)
                             }}
                         >
                             <BookOpen className="mr-3 h-4 w-4" />
-                            View Transmission
+                            Read Newsletter
                         </Button>
-                        <div className="h-14 w-14 flex items-center justify-center rounded-lg border border-white/20 text-white hover:bg-white/10 transition-all">
-                            <Download className="h-4 w-4" />
-                        </div>
+
                     </div>
                 </div>
             </div>

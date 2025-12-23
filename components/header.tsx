@@ -536,7 +536,7 @@ const ListItem = React.forwardRef<
           ref={ref as React.Ref<HTMLAnchorElement>}
           href={href!}
           className={cn(
-            "group/item block select-none space-y-1 p-3 leading-none no-underline outline-none transition-all duration-300 hover:bg-black/[0.02] focus:bg-black/[0.02] relative overflow-hidden",
+            "group/item block select-none space-y-1 p-3 leading-none no-underline outline-none transition-all duration-300 relative overflow-hidden",
             className
           )}
           {...props}

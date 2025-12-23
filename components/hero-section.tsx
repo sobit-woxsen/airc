@@ -4,6 +4,7 @@ import { DottedGlowBackground } from "@/components/ui/dotted-glow-background"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Play, Pause, ChevronRight } from "lucide-react"
+import { MovingBorder } from "@/components/ui/moving-border"
 import { useRef, useEffect } from "react"
 import { useVideoPlayer } from "@/contexts/video-player-context"
 
@@ -172,7 +173,8 @@ export function HeroSection() {
             transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
           >
             Research that{" "}
-            <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-br from-accent via-accent/80 to-accent/60">
+            <span
+              className="relative inline-block text-transparent bg-clip-text bg-gradient-to-br from-accent via-accent/80 to-accent/60 px-[4px]">
               shapes
               <motion.span
                 className="absolute -bottom-2 left-0 w-full h-1.5 bg-accent/20 rounded-full"
@@ -210,19 +212,34 @@ export function HeroSection() {
               </button>
             </Link>
             <Link href="/products">
-              <button
-                className="group relative cursor-pointer inline-flex h-14 items-center justify-center overflow-hidden rounded-full border border-black/5 bg-white/50 px-10 text-sm font-medium backdrop-blur-sm transition-all hover:bg-white hover:border-black/10 hover:scale-105 active:scale-95 shadow-xl shadow-black/5"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Explore Products <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1 text-neutral-400 group-hover:text-black" />
-                </span>
-              </button>
+              <div className="relative p-[2px] rounded-full overflow-hidden group">
+                <div
+                  className="absolute inset-0 z-0"
+                  style={{
+                    maskImage: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    maskComposite: "exclude",
+                    WebkitMaskComposite: "xor",
+                    padding: "2px",
+                  }}
+                >
+                  {/* <MovingBorder duration={5000} rx="35px" ry="35px">
+                    <div className="h-3 w-10 opacity-[1] bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,var(--accent)_0%,transparent_100%)]" />
+                  </MovingBorder> */}
+                </div>
+                <button
+                  className="relative z-10 group cursor-pointer inline-flex h-14 items-center justify-center overflow-hidden rounded-full border border-black/5 bg-white/50 px-10 text-sm font-medium backdrop-blur-sm transition-all hover:bg-white hover:border-black/10 hover:scale-[1.02] active:scale-95 shadow-xl shadow-black/5"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    Explore Products <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-1 text-neutral-400 group-hover:text-black" />
+                  </span>
+                </button>
+              </div>
             </Link>
           </motion.div>
 
           {/* Video Section with moving border beam effect */}
           <motion.div
-            className="mt-24 mb-12 relative max-w-5xl mx-auto"
+            className="mt-24 mb-12 relative max-w-8xl mx-auto"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -233,25 +250,26 @@ export function HeroSection() {
             <div className="absolute -inset-20 bg-accent/5 blur-[120px] rounded-full opacity-50 -z-10" />
 
             {/* Video Container with Dynamic Border */}
-            <div className="relative rounded-[2.2rem] p-1.5 overflow-hidden group">
-              {/* Moving Border Beam (Actual Implementation) */}
-              <div className="absolute inset-0 z-0">
-                <motion.div
-                  animate={{
-                    rotate: [0, 360],
-                  }}
-                  transition={{
-                    duration: 10,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className="absolute inset-[-100%] bg-[conic-gradient(from_0deg,transparent_40%,var(--accent)_50%,transparent_60%)] opacity-40 group-hover:opacity-100 transition-opacity duration-500"
-                />
+            <div className="relative rounded-sm p-[0.5px] overflow-hidden group">
+              {/* Aceternity Moving Border */}
+              <div
+                className="absolute inset-0 z-0"
+                style={{
+                  maskImage: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                  maskComposite: "exclude",
+                  WebkitMaskComposite: "xor",
+                }}
+              >
+                <MovingBorder duration={10000} rx="24px" ry="24px">
+                  <div
+                    className="h-32 w-32 opacity-[1] bg-[radial-gradient(var(--accent)_40%,transparent_60%)]"
+                  />
+                </MovingBorder>
               </div>
 
               {/* Glass Container */}
-              <div className="relative z-10 rounded-[2rem] border border-white/20 bg-white/40 p-1.5 shadow-2xl backdrop-blur-2xl">
-                <div className="relative aspect-video overflow-hidden rounded-[1.7rem] bg-neutral-100 shadow-inner">
+              <div className="relative z-10 rounded-sm border border-white/20 bg-white/40 p-1.5 shadow-2xl backdrop-blur-2xl">
+                <div className="relative aspect-video overflow-hidden rounded-sm bg-neutral-100 shadow-inner">
                   <video
                     ref={videoRef}
                     className="w-full h-full object-cover"

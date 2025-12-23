@@ -85,8 +85,8 @@ export default function PodcastEpisodeClient({ episode }: { episode: Episode }) 
                             <div className="flex-1 space-y-8">
                                 <div className="space-y-6">
                                     <div className="flex items-center gap-3">
-                                        <span className="px-3 py-1 bg-accent/10 text-accent text-[10px] font-semibold uppercase rounded-lg border border-accent/20">
-                                            Signal {episode.id}
+                                        <span className="px-3 py-1 bg-accent/10 text-accent text-[10px] font-semibold uppercase rounded-sm border border-accent/20">
+                                            Episode {episode.id}
                                         </span>
                                         <span className="text-[10px] font-semibold uppercase tracking-widest text-black/40">{episode.date}</span>
                                     </div>
@@ -102,17 +102,17 @@ export default function PodcastEpisodeClient({ episode }: { episode: Episode }) 
                                 <div className="flex flex-wrap gap-6 items-center">
                                     <button
                                         onClick={handlePlayPause}
-                                        className="h-14 px-10 bg-black text-white rounded-lg text-[11px] font-semibold uppercase tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl shadow-black/10 flex items-center gap-3 group"
+                                        className="h-14 px-10 bg-black cursor-pointer text-white rounded-full text-[11px] font-semibold uppercase tracking-widest transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl shadow-black/10 flex items-center gap-3 group"
                                     >
                                         {isThisPlaying ? (
                                             <>
                                                 <Pause className="h-4 w-4 fill-white" />
-                                                Streaming Signal
+                                                Playing
                                             </>
                                         ) : (
                                             <>
                                                 <Play className="h-4 w-4 fill-white ml-0.5" />
-                                                Decipher Signal
+                                                Play this Episode
                                             </>
                                         )}
                                     </button>
@@ -122,10 +122,10 @@ export default function PodcastEpisodeClient({ episode }: { episode: Episode }) 
                                             <Clock className="w-4 h-4 text-accent" />
                                             {episode.duration}
                                         </div>
-                                        <div className="flex items-center gap-2">
+                                        {/* <div className="flex items-center gap-2">
                                             <Headphones className="w-4 h-4 text-accent" />
                                             Direct Feed
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                             </div>
@@ -136,10 +136,10 @@ export default function PodcastEpisodeClient({ episode }: { episode: Episode }) 
                         <div className="lg:col-span-8 space-y-16">
                             {/* Description */}
                             <section>
-                                <div className="flex items-center gap-4 mb-10">
-                                    <div className="h-px flex-1 bg-black/5" />
-                                    <h2 className="text-[10px] font-semibold uppercase tracking-widest text-black/40">Transmission Details</h2>
-                                    <div className="h-px flex-1 bg-black/5" />
+                                <div className="flex items-center gap-4 mb-4">
+                                    {/* <div className="h-px flex-1 bg-black/5" /> */}
+                                    <h2 className="text-[10px] font-semibold uppercase tracking-widest text-black/40">About this Podcast</h2>
+                                    {/* <div className="h-px flex-1 bg-black/5" /> */}
                                 </div>
                                 <div className="prose prose-neutral max-w-none prose-p:text-lg prose-p:leading-relaxed prose-p:text-black/70 prose-strong:text-black">
                                     <p>{episode.description}</p>

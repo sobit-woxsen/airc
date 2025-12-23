@@ -98,7 +98,7 @@ export function StatsSection() {
                   <div className="text-6xl md:text-7xl font-normal text-foreground mb-4 tracking-tighter transition-transform duration-500 group-hover:scale-105">
                     <Counter value={stat.value} isInView={isInView} />
                   </div>
-                  <div className="text-sm font-bold text-black/40 uppercase tracking-[0.2em] mb-2">
+                  <div className="text-sm font-bold text-black/40 uppercase tracking-[0.05em] mb-2">
                     {stat.name}
                   </div>
                   <div className="text-base text-neutral-500 max-w-[200px] leading-relaxed font-medium">

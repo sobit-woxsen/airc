@@ -58,7 +58,7 @@ export default function CentersPage() {
                                                     <div className="p-4 rounded-lg bg-neutral-50 border border-black/5 group-hover:bg-black group-hover:text-white transition-all duration-500 group-hover:scale-105 shadow-sm">
                                                         <center.icon className="h-7 w-7" />
                                                     </div>
-                                                    {center.isNew && (
+                                                    {/* {center.isNew && (
                                                         <div className="flex flex-col items-end">
                                                             <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent mb-1">Status</span>
                                                             <span className="flex items-center gap-1.5 px-3 py-1 bg-accent/5 rounded-lg border border-accent/10 text-accent text-[10px] font-semibold uppercase tracking-wider">
@@ -66,7 +66,7 @@ export default function CentersPage() {
                                                                 Active Log
                                                             </span>
                                                         </div>
-                                                    )}
+                                                    )} */}
                                                 </div>
 
                                                 <div className="flex-1 relative z-10 mb-12">
@@ -80,9 +80,9 @@ export default function CentersPage() {
 
                                                 <div className="pt-8 border-t border-black/5 flex items-center justify-between relative z-10">
                                                     <span className="text-[10px] font-semibold uppercase tracking-widest text-black/40 group-hover:text-black transition-colors">
-                                                        Access Documentation
+                                                        Know More
                                                     </span>
-                                                    <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-black text-white transform transition-all duration-500 group-hover:scale-105 group-hover:bg-accent group-hover:shadow-lg group-hover:shadow-accent/20">
+                                                    <div className="h-10 w-10 flex items-center justify-center rounded-full text-black/40 transform transition-all duration-500 group-hover:scale-105 group-hover:bg-accent group-hover:shadow-lg group-hover:shadow-accent/20">
                                                         <ArrowRight className="h-4 w-4" />
                                                     </div>
                                                 </div>

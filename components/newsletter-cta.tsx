@@ -49,7 +49,7 @@ export function NewsletterCTA() {
     <section className="w-full py-20 overflow-hidden">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
-          className="relative overflow-hidden rounded-[2.5rem] border border-black/5 bg-white/50 px-6 py-16 sm:px-16 sm:py-24 backdrop-blur-xl shadow-2xl shadow-black/[0.02]"
+          className="relative overflow-hidden rounded-lg border border-black/5 bg-white/50 px-6 py-16 sm:px-16 sm:py-24 backdrop-blur-xl shadow-2xl shadow-black/[0.02]"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

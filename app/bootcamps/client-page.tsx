@@ -124,13 +124,7 @@ export function BootcampsClientPage() {
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
           {/* Results Status */}
-          <div className="flex items-center gap-4 mb-12">
-            <div className="h-px flex-1 bg-black/5" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/30">
-              {filteredBootcamps.length} Modules Identified
-            </span>
-            <div className="h-px flex-1 bg-black/5" />
-          </div>
+
 
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as any)} className="w-full">
             <TabsContent value={activeTab} className="mt-0">
@@ -212,14 +206,14 @@ function BootcampCard({ bootcamp, index }: { bootcamp: Bootcamp; index: number }
         className="h-full rounded-lg border border-black/5 bg-white overflow-hidden transition-all duration-500 hover:border-black/10 hover:shadow-2xl hover:shadow-black/[0.02] flex flex-col group"
         spotlightColor="rgba(0, 0, 0, 0.02)"
       >
-        <div className="p-10 flex flex-col h-full bg-white relative">
+        <div className="p-6 flex flex-col h-full bg-white relative">
           <div className="absolute inset-0 bg-noise opacity-[0.01] pointer-events-none" />
 
           <div className="flex items-start justify-between gap-4 mb-10 relative z-10">
-            <Badge className="rounded-lg px-3 py-1 bg-black text-white text-[9px] font-semibold uppercase tracking-[0.2em] border-none">
+            {/* <Badge className="rounded-lg px-3 py-1 bg-black text-white text-[9px] font-semibold uppercase tracking-[0.2em] border-none">
               {bootcampCategories[bootcamp.category as keyof typeof bootcampCategories]}
-            </Badge>
-            <div className="flex items-center gap-2 px-3 py-1 bg-neutral-50 rounded-lg border border-black/5 text-[9px] font-bold uppercase tracking-widest text-black/40">
+            </Badge> */}
+            <div className="flex items-center gap-2 px-3 py-1 bg-neutral-50 rounded-sm border border-black/5 text-[9px] font-bold uppercase tracking-widest text-black/40">
               <Calendar className="h-3 w-3 text-accent" />
               {bootcamp.month}
             </div>
@@ -270,12 +264,12 @@ function BootcampCard({ bootcamp, index }: { bootcamp: Bootcamp; index: number }
               rel="noopener noreferrer"
               className="block w-full"
             >
-              <Button className="w-full h-14 rounded-lg bg-black text-white hover:bg-neutral-900 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-black/10 text-[10px] font-bold uppercase tracking-[0.2em] group overflow-hidden relative">
+              <Button variant={"outline"} className="w-full h-14 rounded-full bg-white text-black cursor-pointer hover:bg-neutral-900 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-black/10 text-[10px] font-bold uppercase tracking-[0.2em] group overflow-hidden relative">
                 <span className="relative z-10 flex items-center gap-2">
-                  Initialize Application
+                  Enroll Now
                   <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </span>
-                <div className="absolute inset-x-0 bottom-0 h-1 bg-accent/20 transition-all duration-300 group-hover:h-full group-hover:bg-accent/5" />
+                {/* <div className="absolute inset-x-0 bottom-0 h-1 bg-accent/20 transition-all duration-300 group-hover:h-full group-hover:bg-accent/5" /> */}
               </Button>
             </Link>
           </div>

@@ -73,14 +73,14 @@ export function FAQSection() {
                 transition={{ duration: 0.5, delay: index * 0.05 }}
               >
                 <div
-                  className={`group relative overflow-hidden rounded-[1.5rem] border transition-all duration-500 ${isOpen
+                  className={`group relative overflow-hidden rounded-lg border transition-all duration-500 ${isOpen
                     ? "bg-gray-50/80 border-black/10 shadow-xl shadow-black/[0.02]"
                     : "bg-white border-black/5 hover:border-black/10 hover:bg-gray-50/30"
                     }`}
                 >
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="w-full px-8 py-6 flex items-center justify-between text-left focus:outline-none"
+                    className="w-full px-6 py-4 flex items-center justify-between text-left focus:outline-none"
                   >
                     <span className="text-lg font-medium tracking-tight pr-8">{faq.question}</span>
                     <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 ${isOpen ? "bg-accent text-accent-foreground rotate-180" : "bg-black/5 text-black"

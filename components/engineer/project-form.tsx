@@ -29,7 +29,6 @@ import {
 } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { createProject, updateProject, submitProjectForReview } from "@/app/actions/projects"
-import { addMediaToProject, addDocumentToProject } from "@/app/actions/media"
 import { toast } from "sonner"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -49,8 +48,9 @@ const projectFormSchema = z.object({
   technologies: z.string().min(1, "Please add at least one technology"),
   demoUrl: z.string().url("Please provide a valid URL").optional().or(z.literal("")),
   githubUrl: z.string().url("Please provide a valid URL").optional().or(z.literal("")),
-  docUrl: z.string().url("Please provide a valid URL").optional().or(z.literal("")),
-  previewUrl: z.string().url("Please provide a valid URL").optional().or(z.literal("")),
+  // Store media and documents as JSON strings
+  mediaJson: z.string().default("[]"),
+  documentsJson: z.string().default("[]"),
 })
 
 export type ProjectWithRelations = Prisma.ProjectGetPayload<{
@@ -85,7 +85,57 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
   const [documents, setDocuments] = useState<{ url: string; title: string; type: string }[]>(
     project?.documents?.map(d => ({ url: d.url, title: d.title, type: d.type })) || []
   )
+
+  // Wrapper functions with logging
+  const handleMediaChange = (newMedia: { url: string; type: "IMAGE" | "VIDEO" }[]) => {
+    console.log("🎬 Media onChange called with:", newMedia)
+    setAdditionalMedia(newMedia)
+    form.setValue("mediaJson", JSON.stringify(newMedia), { shouldValidate: true })
+  }
+
+  const handleDocumentsChange = (newDocs: { url: string; title: string; type: string }[]) => {
+    console.log("📄 Documents onChange called with:", newDocs)
+    setDocuments(newDocs)
+    form.setValue("documentsJson", JSON.stringify(newDocs), { shouldValidate: true })
+  }
+
+  const handleDepartmentsChange = (newDepts: string[]) => {
+    console.log("🏢 Departments onChange called with:", newDepts)
+    setSelectedDepartments(newDepts)
+    form.setValue("departmentIds", newDepts.join(","), { shouldValidate: true })
+  }
+
   const isEditing = !!project
+
+  // Track component mount/unmount
+  useEffect(() => {
+    console.log("🔵 ProjectForm MOUNTED")
+    return () => {
+      console.log("🔴 ProjectForm UNMOUNTED - State will be lost!")
+    }
+  }, [])
+
+  // Track state changes
+  useEffect(() => {
+    console.log("✅ State changed - selectedDepartments:", selectedDepartments)
+    if (selectedDepartments.length === 0) {
+      console.warn("⚠️ Departments reset to empty!")
+    }
+  }, [selectedDepartments])
+
+  useEffect(() => {
+    console.log("✅ State changed - additionalMedia:", additionalMedia)
+    if (additionalMedia.length === 0) {
+      console.warn("⚠️ Media reset to empty!")
+    }
+  }, [additionalMedia])
+
+  useEffect(() => {
+    console.log("✅ State changed - documents:", documents)
+    if (documents.length === 0) {
+      console.warn("⚠️ Documents reset to empty!")
+    }
+  }, [documents])
 
   const form = useForm<z.infer<typeof projectFormSchema>>({
     resolver: zodResolver(projectFormSchema),
@@ -100,8 +150,8 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
       technologies: (project?.technologies || []).join(", ") || "",
       demoUrl: project?.demoUrl || "",
       githubUrl: project?.githubUrl || "",
-      docUrl: project?.docUrl || "",
-      previewUrl: project?.previewUrl || "",
+      mediaJson: JSON.stringify(project?.media?.map(m => ({ url: m.url, type: m.type })) || []),
+      documentsJson: JSON.stringify(project?.documents?.map(d => ({ url: d.url, title: d.title, type: d.type })) || []),
     },
   })
 
@@ -163,8 +213,6 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
       productStatus: formValues.productStatus || "Alpha",
       demoUrl: formValues.demoUrl || "",
       githubUrl: formValues.githubUrl || "",
-      docUrl: formValues.docUrl || "",
-      previewUrl: formValues.previewUrl || "",
       departments: encodeURIComponent(JSON.stringify(selectedDepts)),
       media: encodeURIComponent(JSON.stringify(additionalMedia)),
       documents: encodeURIComponent(JSON.stringify(documents)),
@@ -174,16 +222,36 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
   }
 
   async function onSubmit(values: z.infer<typeof projectFormSchema>, submitForReview: boolean = false) {
+    console.log("=== FORM SUBMISSION STARTED ===")
+    console.log("Submit for review:", submitForReview)
+    console.log("Is editing:", isEditing)
+    console.log("Form values:", values)
+    console.log("Selected departments STATE:", selectedDepartments)
+    console.log("Selected departments COUNT:", selectedDepartments.length)
+    console.log("Form departmentIds field:", values.departmentIds)
+    console.log("Additional media count:", additionalMedia.length)
+    console.log("Documents count:", documents.length)
+
     setIsLoading(true)
 
     try {
-      // Parse tags and technologies from form string values to arrays
+      // Use values from the form submission or form.getValues() to avoid stale closure issues
       const tagsArray = getTagsArray()
       const technologiesArray = getTechnologiesArray()
 
+      // Parse fields that are stored as JSON or are extra-form state
+      const media = JSON.parse(values.mediaJson || "[]")
+      const docs = JSON.parse(values.documentsJson || "[]")
+      const deptIds = values.departmentIds ? values.departmentIds.split(",").filter(Boolean) : []
+
+      console.log("⚠️ DATA FOR SUBMISSION (from form values):")
+      console.log("departmentIds:", deptIds)
+      console.log("media:", media)
+      console.log("documents:", docs)
+
       const projectData = {
         name: values.name,
-        departmentIds: selectedDepartments,
+        departmentIds: deptIds,
         tagline: values.tagline,
         description: values.description,
         image: values.image,
@@ -192,67 +260,80 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
         technologies: technologiesArray,
         demoUrl: values.demoUrl || undefined,
         githubUrl: values.githubUrl || undefined,
-        docUrl: values.docUrl || undefined,
-        previewUrl: values.previewUrl || undefined,
+        media: media,
+        documents: docs,
       }
+
+      console.log("Project data prepared:", {
+        ...projectData,
+        departmentIds: selectedDepartments,
+        mediaItemsCount: additionalMedia.length,
+        documentsCount: documents.length,
+      })
+      console.log("FULL projectData object:", JSON.stringify(projectData, null, 2))
 
       let result
       let projectId = project?.id
 
       if (isEditing) {
+        console.log("Updating existing project:", project.id)
         result = await updateProject(project.id, projectData)
       } else {
-        result = await createProject(projectData)
+        console.log("Creating new project...")
+        console.log("Submit for review:", submitForReview)
+        result = await createProject(projectData, submitForReview)
         projectId = result.projectId
       }
+
+      console.log("Project creation/update result:", result)
 
       if (result.success) {
         toast.success(result.message)
 
-        // Save additional media
-        if (projectId && additionalMedia.length > 0) {
-          for (let i = 0; i < additionalMedia.length; i++) {
-            await addMediaToProject(projectId, {
-              type: additionalMedia[i].type,
-              url: additionalMedia[i].url,
-              order: i,
-            })
-          }
+        // Ensure projectId is set
+        if (!projectId) {
+          console.error("Project ID is missing after creation/update")
+          toast.error("Error: Project ID not found")
+          setIsLoading(false)
+          return
         }
 
-        // Save documents
-        if (projectId && documents.length > 0) {
-          for (let i = 0; i < documents.length; i++) {
-            await addDocumentToProject(projectId, {
-              title: documents[i].title,
-              url: documents[i].url,
-              type: documents[i].type as any,
-              order: i,
-            })
-          }
-        }
+        console.log("Project created/updated successfully with all data!")
+        console.log("Project ID:", projectId)
+        console.log("Media items saved:", additionalMedia.length)
+        console.log("Documents saved:", documents.length)
 
-        if (submitForReview && projectId) {
+        // Only call submitProjectForReview when editing an existing project
+        // For new projects, status is already set during creation
+        if (submitForReview && projectId && isEditing) {
+          console.log("Submitting edited project for review...")
           const submitResult = await submitProjectForReview(projectId)
+          console.log("Submit result:", submitResult)
           if (submitResult.success) {
             toast.success("Project submitted for review!")
-            // Redirect to projects list after submitting for review
+            console.log("=== FORM SUBMISSION COMPLETED SUCCESSFULLY ===")
             router.push("/engineer/projects")
             router.refresh()
+          } else {
+            toast.error(submitResult.message)
+            console.error("Failed to submit for review:", submitResult.message)
           }
         } else if (isEditing) {
-          // Stay on edit page and refresh to show updated data
+          console.log("=== FORM SUBMISSION COMPLETED (EDIT) ===")
           router.refresh()
         } else {
-          // Redirect to projects list after creating new project
+          console.log("=== FORM SUBMISSION COMPLETED ===")
+          // Redirect to projects list after creating project (draft or submitted)
           router.push("/engineer/projects")
           router.refresh()
         }
       } else {
+        console.error("Project creation/update failed:", result.message)
         toast.error(result.message)
       }
     } catch (error) {
-      toast.error("An error occurred")
+      console.error("=== FORM SUBMISSION ERROR ===", error)
+      toast.error(error instanceof Error ? error.message : "An error occurred")
     } finally {
       setIsLoading(false)
     }
@@ -309,7 +390,17 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
 
     // Clean up when component unmounts
     return () => setActions(null)
-  }, [isLoading, form, router, setActions, isEditing, project?.status])
+  }, [
+    isLoading,
+    form,
+    router,
+    setActions,
+    isEditing,
+    project?.status,
+    selectedDepartments,
+    additionalMedia,
+    documents
+  ])
 
   return (
     <Form {...form}>
@@ -349,7 +440,7 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
                             const newDepartments = checked
                               ? [...selectedDepartments, dept.id]
                               : selectedDepartments.filter((id) => id !== dept.id)
-                            setSelectedDepartments(newDepartments)
+                            handleDepartmentsChange(newDepartments)
                             field.onChange(newDepartments.join(","))
                           }}
                         />
@@ -502,42 +593,6 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="docUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Documentation URL</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="https://docs.example.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>Link to project documentation</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="previewUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Preview URL</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="https://preview.example.com"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>Link to live preview or staging environment</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </CardContent>
         </Card>
 
@@ -552,7 +607,7 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
 
             <MediaUpload
               value={additionalMedia}
-              onChange={setAdditionalMedia}
+              onChange={handleMediaChange}
               folder="airc-portal/projects/media"
               maxFiles={10}
               maxSize={200 * 1024 * 1024}
@@ -571,7 +626,7 @@ export function ProjectForm({ project, departments }: ProjectFormProps) {
 
             <DocumentUpload
               value={documents}
-              onChange={setDocuments}
+              onChange={handleDocumentsChange}
               folder="airc-portal/projects/documents"
               maxFiles={10}
               maxSize={10 * 1024 * 1024}

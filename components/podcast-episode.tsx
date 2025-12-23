@@ -84,7 +84,7 @@ export function PodcastEpisode({ episode }: { episode: Episode }) {
               <div className="flex items-center gap-5">
                 <button
                   onClick={handlePlayPause}
-                  className="w-14 h-14 flex items-center justify-center bg-black text-white rounded-lg transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-black/10"
+                  className="w-14 h-14 flex items-center justify-center bg-black text-white rounded-full transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-black/10"
                 >
                   {isThisPlaying ? (
                     <Pause className="h-6 w-6 fill-white" />
@@ -94,16 +94,16 @@ export function PodcastEpisode({ episode }: { episode: Episode }) {
                 </button>
 
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-semibold uppercase tracking-widest text-black/20">Frequency</span>
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-black/20">{isThisPlaying ? "Listening" : "Listen"}</span>
                   <span className="text-sm font-semibold text-black">
-                    {isThisPlaying ? "Streaming Signal" : "Decipher Episode"}
+                    {isThisPlaying ? "Pause" : "Play"}
                   </span>
                 </div>
               </div>
 
               <Link href={`/podcast/${episode.slug}`} className="group/btn hidden sm:block">
                 <span className="text-[10px] font-semibold uppercase tracking-widest text-black/40 group-hover/btn:text-black transition-colors flex items-center gap-2">
-                  Full Log <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
+                  See More <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
                 </span>
               </Link>
             </div>

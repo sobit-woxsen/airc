@@ -86,19 +86,19 @@ export default function CAGHIPage() {
           ]}
         >
           {/* Action Row */}
-          <div className="flex flex-wrap items-center gap-4 mt-8 lg:mt-0">
-            <Button asChild size="lg" className="rounded-lg h-12 px-8 bg-black text-white hover:bg-neutral-900 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-black/10 text-[11px] font-semibold uppercase tracking-widest border border-white/10">
+          {/* <div className="flex flex-wrap items-center gap-4 mt-8 lg:mt-0">
+            <Button asChild size="lg" className="rounded-full h-12 px-8 bg-black text-white hover:bg-neutral-900 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-black/10 text-[11px] font-semibold uppercase tracking-widest border border-white/10">
               <Link href="#contact" className="flex items-center gap-2">
                 Collaborate with us
                 <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-lg h-12 px-8 border-black/5 bg-white/50 backdrop-blur-sm hover:bg-white hover:border-black/10 transition-all text-[11px] font-semibold uppercase tracking-widest">
+            <Button asChild size="lg" variant="outline" className="rounded-full h-12 px-8 border-black/5 bg-white/50 backdrop-blur-sm hover:bg-white hover:border-black/10 transition-all text-[11px] font-semibold uppercase tracking-widest">
               <Link href="#mission">
                 Read Mission
               </Link>
             </Button>
-          </div>
+          </div> */}
         </PageHeader>
 
         {/* Mission Section */}

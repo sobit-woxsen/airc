@@ -21,6 +21,8 @@ import {
 import { MoreHorizontal, Eye, CheckCircle, XCircle, Trash2, Pencil } from "lucide-react"
 import { approveProject, rejectProject, deleteProject } from "@/app/actions/projects"
 import { toast } from "sonner"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Dialog,
   DialogContent,
@@ -55,6 +57,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
   const [selectedProject, setSelectedProject] = useState<ProjectWithRelations | null>(null)
   const [notes, setNotes] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+  const [confirmName, setConfirmName] = useState("")
 
   const handleApprove = async () => {
     if (!selectedProject) return
@@ -94,11 +97,12 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
     if (!selectedProject) return
 
     setIsLoading(true)
-    const result = await deleteProject(selectedProject.id)
+    const result = await deleteProject(selectedProject.id, confirmName)
 
     if (result.success) {
       toast.success(result.message)
       setDeleteDialog(false)
+      setConfirmName("")
     } else {
       toast.error(result.message)
     }
@@ -209,6 +213,7 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
                         <DropdownMenuItem
                           onClick={() => {
                             setSelectedProject(project)
+                            setConfirmName("")
                             setDeleteDialog(true)
                           }}
                           className="text-red-600 focus:text-red-600"
@@ -313,24 +318,44 @@ export function ProjectsTable({ projects }: ProjectsTableProps) {
           <div className="space-y-4 py-4">
             <div className="rounded-lg bg-destructive/10 p-4 text-sm text-destructive">
               <p className="font-semibold">Warning: This action is permanent!</p>
-              <ul className="mt-2 list-disc list-inside space-y-1">
-                <li>All project media will be deleted</li>
-                <li>All project documents will be deleted</li>
-                <li>Project history will be lost</li>
+              <ul className="mt-2 list-disc list-inside space-y-1 text-xs">
+                <li>All project media and documents will be deleted.</li>
+                <li>Project history will be permanently lost.</li>
               </ul>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirm-delete-admin" className="text-sm font-medium">
+                To confirm, type <span className="font-bold select-none">"{selectedProject?.name}"</span> below:
+              </Label>
+              <Input
+                id="confirm-delete-admin"
+                value={confirmName}
+                onChange={(e) => setConfirmName(e.target.value)}
+                placeholder="Type project name here"
+                className="rounded-xl border-slate-200"
+                autoComplete="off"
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteDialog(false)} disabled={isLoading} className="rounded-full px-6">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setDeleteDialog(false)
+                setConfirmName("")
+              }}
+              disabled={isLoading}
+              className="rounded-full px-6"
+            >
               Cancel
             </Button>
             <Button
               onClick={handleDelete}
-              disabled={isLoading}
+              disabled={isLoading || confirmName !== selectedProject?.name}
               variant="destructive"
               className="rounded-full px-6"
             >
-              {isLoading ? "Deleting..." : "Delete Permanently"}
+              {isLoading ? "Deleting..." : "Permanently Delete"}
             </Button>
           </DialogFooter>
         </DialogContent>

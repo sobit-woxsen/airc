@@ -18,7 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Mail, AlertCircle, CheckCircle, ArrowRight, Loader2, Home } from "lucide-react"
+import { Mail, AlertCircle, CheckCircle, ArrowRight, Loader2, Home, ChevronRight } from "lucide-react"
 import { toast } from "sonner"
 import Image from "next/image"
 
@@ -150,9 +150,9 @@ export default function LoginPage() {
             transition={{ duration: 0.4 }}
             className="w-full max-w-[400px] space-y-10"
           >
-            <div className="space-y-3">
-              <h2 className="text-4xl font-bold tracking-tight text-gray-900">Sign In</h2>
-              <p className="text-gray-500 text-lg">
+            <div className="space-y-1">
+              <h2 className="text-3xl font-bold tracking-tight text-gray-900">Sign In</h2>
+              <p className="text-gray-500 text-sm">
                 Enter your details to access your dashboard.
               </p>
             </div>
@@ -183,12 +183,12 @@ export default function LoginPage() {
                   animate={{ opacity: 1, y: 0 }}
                   className="space-y-8"
                 >
-                  <div className="p-10 rounded-[32px] bg-neutral-50 border border-neutral-100 text-center space-y-6">
+                  <div className="p-10 rounded-lg bg-neutral-50 border border-neutral-100 text-center space-y-6">
                     <div className="mx-auto w-20 h-20 rounded-full bg-[#52c2cb]/10 flex items-center justify-center">
                       <CheckCircle className="h-10 w-10 text-[#52c2cb]" />
                     </div>
                     <div className="space-y-2">
-                      <h3 className="text-2xl font-bold text-gray-900">Check your email</h3>
+                      <h3 className="text-2xl font-bold text-gray-900">Check your inbox</h3>
                       <p className="text-gray-500 leading-relaxed px-4">
                         We've sent a magic login link to:
                         <span className="block text-gray-900 font-semibold mt-2 break-all">{magicLinkForm.getValues("email")}</span>
@@ -202,7 +202,7 @@ export default function LoginPage() {
                       setMagicLinkSent(false)
                       magicLinkForm.reset()
                     }}
-                    className="w-full border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-600 font-semibold py-7 rounded-2xl transition-all"
+                    className="w-full border-gray-200 hover:bg-gray-50 hover:border-gray-300 text-gray-600 font-semibold py-7 rounded-lg hover:text-black cursor-pointer transition-all"
                   >
                     Try a different email
                   </Button>
@@ -220,7 +220,7 @@ export default function LoginPage() {
                         name="email"
                         render={({ field }) => (
                           <FormItem className="space-y-3">
-                            <FormLabel className="text-sm font-semibold text-gray-700 uppercase tracking-wider ml-1">Work Email</FormLabel>
+                            <FormLabel className="text-sm font-semibold text-gray-700 uppercase  ml-1">Work Email</FormLabel>
                             <FormControl>
                               <div className="relative group">
                                 <Mail className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-[#52c2cb] transition-colors" />
@@ -228,7 +228,7 @@ export default function LoginPage() {
                                   {...field}
                                   type="email"
                                   placeholder="name@company.com"
-                                  className="pl-14 py-8 bg-neutral-50 border-neutral-200 text-gray-900 text-lg placeholder:text-gray-400 focus:ring-4 focus:ring-[#52c2cb]/10 focus:border-[#52c2cb] focus:bg-white transition-all rounded-[20px]"
+                                  className="pl-14 py-6 bg-neutral-50 border-neutral-200 text-gray-900 text-lg placeholder:text-gray-400 focus:ring-4 focus:ring-[#52c2cb]/10 focus:border-[#52c2cb] focus:bg-white transition-all rounded-sm"
                                   disabled={isLoading}
                                 />
                               </div>
@@ -240,7 +240,7 @@ export default function LoginPage() {
 
                       <Button
                         type="submit"
-                        className="w-full bg-gray-900 hover:bg-black text-white font-bold py-8 text-xl rounded-[20px] transition-all shadow-xl shadow-gray-200 group relative overflow-hidden active:scale-[0.98]"
+                        className="w-full bg-gray-900 hover:bg-black text-white  py-6 text-sm rounded-sm transition-all shadow-xl shadow-gray-200 group relative overflow-hidden active:scale-[0.98]"
                         disabled={isLoading}
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-[#52c2cb]/0 via-white/10 to-[#52c2cb]/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-in-out" />
@@ -249,7 +249,7 @@ export default function LoginPage() {
                         ) : (
                           <span className="flex items-center justify-center gap-3">
                             Send Magic Link
-                            <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                            <ChevronRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
                           </span>
                         )}
                       </Button>

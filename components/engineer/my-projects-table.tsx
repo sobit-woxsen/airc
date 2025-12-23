@@ -31,6 +31,8 @@ import Link from "next/link"
 import { format } from "date-fns"
 import { deleteProject } from "@/app/actions/projects"
 import { toast } from "sonner"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 type ProjectWithRelations = Project & {
   departments: {
@@ -54,16 +56,18 @@ export function MyProjectsTable({ projects }: MyProjectsTableProps) {
   const [deleteDialog, setDeleteDialog] = useState(false)
   const [selectedProject, setSelectedProject] = useState<ProjectWithRelations | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [confirmName, setConfirmName] = useState("")
 
   const handleDelete = async () => {
     if (!selectedProject) return
 
     setIsLoading(true)
-    const result = await deleteProject(selectedProject.id)
+    const result = await deleteProject(selectedProject.id, confirmName)
 
     if (result.success) {
       toast.success(result.message)
       setDeleteDialog(false)
+      setConfirmName("")
     } else {
       toast.error(result.message)
     }
@@ -157,6 +161,7 @@ export function MyProjectsTable({ projects }: MyProjectsTableProps) {
                       <DropdownMenuItem
                         onClick={() => {
                           setSelectedProject(project)
+                          setConfirmName("")
                           setDeleteDialog(true)
                         }}
                         className="text-red-600 focus:text-red-600"
@@ -185,23 +190,43 @@ export function MyProjectsTable({ projects }: MyProjectsTableProps) {
           <div className="space-y-4 py-4">
             <div className="rounded-lg bg-destructive/10 p-4 text-sm text-destructive">
               <p className="font-semibold">Warning: This action is permanent!</p>
-              <ul className="mt-2 list-disc list-inside space-y-1">
-                <li>All project media will be deleted</li>
-                <li>All project documents will be deleted</li>
-                <li>Project history will be lost</li>
+              <ul className="mt-2 list-disc list-inside space-y-1 text-xs">
+                <li>All project media and documents will be deleted.</li>
               </ul>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirm-name">
+                To confirm, type <span className="font-bold select-none">"{selectedProject?.name}"</span> below:
+              </Label>
+              <Input
+                id="confirm-name"
+                value={confirmName}
+                onChange={(e) => setConfirmName(e.target.value)}
+                placeholder="Type project name here"
+                className="rounded-sm h-11 border-slate-200"
+                autoComplete="off"
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteDialog(false)} disabled={isLoading}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setDeleteDialog(false)
+                setConfirmName("")
+              }}
+              disabled={isLoading}
+              className="rounded-full px-6 py-6 cursor-pointer"
+            >
               Cancel
             </Button>
             <Button
               onClick={handleDelete}
-              disabled={isLoading}
+              disabled={isLoading || confirmName !== selectedProject?.name}
               variant="destructive"
+              className="rounded-full px-6 py-6 cursor-pointer"
             >
-              {isLoading ? "Deleting..." : "Delete Permanently"}
+              {isLoading ? "Deleting..." : "Permanently Delete"}
             </Button>
           </DialogFooter>
         </DialogContent>

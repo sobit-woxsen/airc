@@ -89,7 +89,7 @@ export function UsersTable({ users }: UsersTableProps) {
             ) : (
               users.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.name}</TableCell>
+                  <TableCell className="font-medium">{user.name} <br /> <span className="uppercase text-[11px] text-slate-600">{user.designation}</span> </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
                     <div className="flex flex-wrap gap-1">

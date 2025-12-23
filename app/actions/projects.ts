@@ -95,7 +95,7 @@ export async function approveProject(projectId: string, notes?: string) {
     console.error("Error approving project:", error)
     return {
       success: false,
-      message: "An error occurred" || "Failed to approve project",
+      message: "Failed to approve project",
     }
   }
 }
@@ -124,12 +124,12 @@ export async function rejectProject(projectId: string, notes?: string) {
     console.error("Error rejecting project:", error)
     return {
       success: false,
-      message: "An error occurred" || "Failed to reject project",
+      message: "Failed to reject project",
     }
   }
 }
 
-export async function deleteProject(projectId: string) {
+export async function deleteProject(projectId: string, confirmName?: string) {
   const user = await getCurrentUser()
   if (!user) throw new Error("Unauthorized")
 
@@ -149,6 +149,11 @@ export async function deleteProject(projectId: string) {
 
     if (!project) {
       return { success: false, message: "Project not found" }
+    }
+
+    // Server-side validation of the project name
+    if (confirmName && confirmName !== project.name) {
+      return { success: false, message: "Project name confirmation failed" }
     }
 
     // Check if user can delete:
@@ -182,7 +187,7 @@ export async function deleteProject(projectId: string) {
     console.error("Error deleting project:", error)
     return {
       success: false,
-      message: "An error occurred" || "Failed to delete project",
+      message: "Failed to delete project",
     }
   }
 }
@@ -197,22 +202,22 @@ export async function getMyProjects() {
   // 3. Collaborative projects involving their department
   const projectsWhereClause = user.departmentId
     ? {
-        OR: [
-          { submittedById: user.id }, // Own projects
-          {
-            submittedBy: {
-              departmentId: user.departmentId, // Same department projects
+      OR: [
+        { submittedById: user.id }, // Own projects
+        {
+          submittedBy: {
+            departmentId: user.departmentId, // Same department projects
+          },
+        },
+        {
+          departments: {
+            some: {
+              departmentId: user.departmentId, // Collaborative projects
             },
           },
-          {
-            departments: {
-              some: {
-                departmentId: user.departmentId, // Collaborative projects
-              },
-            },
-          },
-        ],
-      }
+        },
+      ],
+    }
     : { submittedById: user.id } // If no department, only show own projects
 
   const projects = await prisma.project.findMany({
@@ -241,51 +246,102 @@ export async function getMyProjects() {
   return projects
 }
 
-export async function createProject(data: {
-  name: string
-  departmentIds: string[]
-  tagline: string
-  description: string
-  image: string
-  tags: string[]
-  productStatus: string
-  technologies: string[]
-  demoUrl?: string
-  githubUrl?: string
-  docUrl?: string
-  previewUrl?: string
-}) {
+export async function createProject(
+  data: {
+    name: string
+    departmentIds: string[]
+    tagline: string
+    description: string
+    image: string
+    tags: string[]
+    productStatus: string
+    technologies: string[]
+    demoUrl?: string
+    githubUrl?: string
+    media?: { url: string; type: "IMAGE" | "VIDEO" }[]
+    documents?: { url: string; title: string; type: string }[]
+  },
+  submitForReview: boolean = false
+): Promise<{ success: true; message: string; projectId: string } | { success: false; message: string; projectId?: never }> {
   const user = await getCurrentUser()
   if (!user) throw new Error("Unauthorized")
 
   try {
-    const { departmentIds, ...projectData } = data
+    const { departmentIds, media, documents, ...restProjectData } = data
+
+    console.log('DATA ::: ', data)
+
+    console.log("Creating project with data:", {
+      name: data.name,
+      departmentIds,
+      mediaCount: media?.length || 0,
+      documentsCount: documents?.length || 0,
+      submittedById: user.id,
+    })
+
+    // Build the create data object
+    const createData: any = {
+      ...restProjectData,
+      status: submitForReview ? "UNDER_REVIEW" : "DRAFT",
+      submittedById: user.id,
+      submittedAt: submitForReview ? new Date() : null,
+      departments: {
+        create: departmentIds.map((deptId) => ({
+          departmentId: deptId,
+        })),
+      },
+    }
+
+    console.log("Project status:", submitForReview ? "UNDER_REVIEW" : "DRAFT")
+
+    // Add media if provided
+    if (media && media.length > 0) {
+      createData.media = {
+        create: media.map((item, index) => ({
+          url: item.url,
+          type: item.type,
+          order: index,
+        })),
+      }
+    }
+
+    // Add documents if provided
+    if (documents && documents.length > 0) {
+      createData.documents = {
+        create: documents.map((doc, index) => ({
+          url: doc.url,
+          title: doc.title,
+          type: doc.type,
+          order: index,
+        })),
+      }
+    }
+
+    console.log("Prisma create data:", JSON.stringify(createData, null, 2))
 
     const project = await prisma.project.create({
-      data: {
-        ...projectData,
-        status: "DRAFT",
-        submittedById: user.id,
-        departments: {
-          create: departmentIds.map((deptId) => ({
-            departmentId: deptId,
-          })),
-        },
-      },
+      data: createData,
     })
+
+    console.log("Project created successfully:", project.id)
+    console.log("Media items created:", media?.length || 0)
+    console.log("Documents created:", documents?.length || 0)
 
     revalidatePath("/engineer/projects")
 
     return {
       success: true,
-      message: "Project created as draft",
+      message: submitForReview ? "Project submitted for review" : "Project created as draft",
       projectId: project.id,
     }
   } catch (error: unknown) {
     console.error("Error creating project:", error)
+    if (error instanceof Error) {
+      console.error("Error details:", error.message, error.stack)
+    }
     return {
       success: false,
-      message: "An error occurred" || "Failed to create project",
+      message: error instanceof Error ? error.message : "Failed to create project",
     }
   }
 }
@@ -303,8 +359,8 @@ export async function updateProject(
     technologies?: string[]
     demoUrl?: string
     githubUrl?: string
-    docUrl?: string
-    previewUrl?: string
+    media?: { url: string; type: "IMAGE" | "VIDEO" }[]
+    documents?: { url: string; title: string; type: string }[]
   }
 ) {
   const user = await getCurrentUser()
@@ -344,23 +400,66 @@ export async function updateProject(
       return { success: false, message: "Unauthorized" }
     }
 
-    const { departmentIds, ...projectData } = data
+    const { departmentIds, media, documents, ...restProjectData } = data
 
-    // Update project and departments
+    console.log("Updating project with:", {
+      projectId,
+      departmentIds,
+      mediaCount: media?.length,
+      documentsCount: documents?.length,
+    })
+
+    // Build the update data object
+    const updateData: any = {
+      ...restProjectData,
+    }
+
+    // Update departments if provided
+    if (departmentIds) {
+      updateData.departments = {
+        deleteMany: {},
+        create: departmentIds.map((deptId) => ({
+          departmentId: deptId,
+        })),
+      }
+    }
+
+    // Update media if provided
+    if (media !== undefined) {
+      updateData.media = {
+        deleteMany: {},
+        create: media.map((item, index) => ({
+          url: item.url,
+          type: item.type,
+          order: index,
+        })),
+      }
+    }
+
+    // Update documents if provided
+    if (documents !== undefined) {
+      updateData.documents = {
+        deleteMany: {},
+        create: documents.map((doc, index) => ({
+          url: doc.url,
+          title: doc.title,
+          type: doc.type,
+          order: index,
+        })),
+      }
+    }
+
+    console.log("Prisma update data:", JSON.stringify(updateData, null, 2))
+
+    // Update project
     await prisma.project.update({
       where: { id: projectId },
-      data: {
-        ...projectData,
-        ...(departmentIds && {
-          departments: {
-            deleteMany: {},
-            create: departmentIds.map((deptId) => ({
-              departmentId: deptId,
-            })),
-          },
-        }),
-      },
+      data: updateData,
     })
+
+    console.log("Project updated successfully")
+    console.log("Media items updated:", media?.length || 0)
+    console.log("Documents updated:", documents?.length || 0)
 
     revalidatePath("/engineer/projects")
     revalidatePath(`/engineer/projects/${projectId}`)
@@ -375,7 +474,7 @@ export async function updateProject(
     console.error("Error updating project:", error)
     return {
       success: false,
-      message: "An error occurred" || "Failed to update project",
+      message: "Failed to update project",
     }
   }
 }
@@ -434,7 +533,7 @@ export async function submitProjectForReview(projectId: string) {
     console.error("Error submitting project:", error)
     return {
       success: false,
-      message: "An error occurred" || "Failed to submit project",
+      message: "Failed to submit project",
     }
   }
 }
