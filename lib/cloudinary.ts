@@ -11,13 +11,23 @@ export { cloudinary }
 
 // Helper function to generate signed upload parameters for client-side uploads
 export async function getCloudinarySignature(folder: string = "airc-portal") {
+  const secret = process.env.CLOUDINARY_API_SECRET
+  if (!secret) {
+    console.error("Cloudinary API Secret is missing")
+    return {
+      error: "Cloudinary configuration missing",
+      cloudName: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+      folder
+    }
+  }
+
   const timestamp = Math.round(new Date().getTime() / 1000)
   const params = {
     timestamp,
     folder,
   }
 
-  const signature = cloudinary.utils.api_sign_request(params, process.env.CLOUDINARY_API_SECRET!)
+  const signature = cloudinary.utils.api_sign_request(params, secret)
 
   return {
     signature,

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { cloudinary } from "@/lib/cloudinary"
+
+export const dynamic = "force-dynamic"
+export const maxDuration = 60 // Increase timeout for video/PDF processing
 import { getCurrentUser } from "@/lib/auth-helpers"
 import ffmpeg from 'fluent-ffmpeg'
 import ffmpegStatic from 'ffmpeg-static'
@@ -14,9 +17,16 @@ if (ffmpegStatic) {
 }
 
 // Temporary directory for processing
-const TEMP_DIR = path.join(process.cwd(), 'public', 'temp-uploads')
-if (!fs.existsSync(TEMP_DIR)) {
-  fs.mkdirSync(TEMP_DIR, { recursive: true })
+const TEMP_DIR = path.join('/tmp', 'airc-uploads')
+
+function ensureTempDir() {
+  if (!fs.existsSync(TEMP_DIR)) {
+    try {
+      fs.mkdirSync(TEMP_DIR, { recursive: true })
+    } catch (e) {
+      console.error("Failed to create temp directory:", e)
+    }
+  }
 }
 
 async function compressVideo(
@@ -128,6 +138,7 @@ export async function POST(request: NextRequest) {
 
   // Define the upload process worker
   const processUpload = async () => {
+    ensureTempDir()
     const tempFiles: string[] = []
     try {
       const user = await getCurrentUser()
@@ -208,7 +219,7 @@ export async function POST(request: NextRequest) {
       await sendEvent({ status: "done", result })
     } catch (error: unknown) {
       console.error("Upload error:", error)
-      await sendEvent({ error: "Upload failed" || "Upload failed" })
+      await sendEvent({ error: "Upload failed" })
     } finally {
       // Cleanup
       for (const f of tempFiles) {

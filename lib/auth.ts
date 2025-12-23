@@ -5,7 +5,9 @@ import { prisma } from "@/lib/prisma"
 import nodemailer from "nodemailer"
 import { Resend } from "resend"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null as unknown as Resend
 
 // Gmail SMTP transporter (Primary)
 const gmailTransporter = nodemailer.createTransport({

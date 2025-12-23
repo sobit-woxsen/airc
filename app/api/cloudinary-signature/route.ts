@@ -3,6 +3,8 @@ import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
 import { getCloudinarySignature } from "@/lib/cloudinary"
 
+export const dynamic = "force-dynamic"
+
 /**
  * API endpoint to generate Cloudinary upload signature for authenticated users
  * This is needed for secure, signed uploads from the client
